@@ -18,10 +18,7 @@ User Question → Embed Question → Similarity Search (cosine) → Top-K Chunks
                           Answer + Citations (doc, page, chunk id)
 ```
 
-* **Routes (`routes/`)** handle incoming requests and return JSON responses. They only manage request parsing and response handling, while all AI logic is delegated to the service layer.
-* **Services (`services/`)** contain the core business logic, including document loading, preprocessing, chunking, embedding generation, vector storage, retrieval, prompt construction, conversation memory, and communication with the Gemini API.
-* **Models (`models/`)** define typed data structures for documents, document chunks, chat messages, citations, and users.
-* **Utils (`utils/`)** provide reusable helper functions such as logging, file validation, token estimation, decorators, and other utility functions.
+
 
 ## Retrieval Pipeline
 
@@ -77,14 +74,6 @@ Open your browser and visit:
 http://localhost:5000
 ```
 
-### Demo Credentials
-
-| Username | Password | Role  |
-| -------- | -------- | ----- |
-| admin    | admin123 | Admin |
-| demo     | demo123  | User  |
-
-You can also create a new account from the registration page.
 
 ### 4. Run Tests
 
@@ -134,15 +123,3 @@ The application includes a lightweight session-based authentication system.
 
 This authentication system is intended for demonstration purposes and can easily be replaced with a production-ready database or identity provider.
 
-## Security & Error Handling
-
-* API keys are loaded securely from the `.env` file.
-* Uploaded files are validated for type, size, and content.
-* Application errors are handled gracefully using custom exceptions.
-* All important events and errors are logged to `reports/app.log`.
-
-## Known Limitations
-
-* Conversation memory is stored in memory and is cleared when the application restarts.
-* The document registry is reloaded on startup, while embeddings remain stored in ChromaDB.
-* Token usage and cost calculations are approximate because Google Gemini's tokenizer is not publicly available.
