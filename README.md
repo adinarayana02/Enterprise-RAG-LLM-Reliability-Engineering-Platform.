@@ -177,16 +177,6 @@ Beyond conventional RAG functionality, The Relay is designed to investigate the 
 | Circuit Breaker | Prevents repeated calls to an unhealthy provider |
 | Request Logger | Records latency, retries, token usage, and status |
 
-### Failure Handling Strategy
-
-- Respect provider-supplied `Retry-After` information.
-- Apply exponential backoff with jitter.
-- Set a maximum retry count.
-- Avoid retrying permanent authentication and validation errors.
-- Stop retries when a daily quota or budget is exhausted.
-- Record the final outcome of each logical request.
-
-Application-level limits are designed to control outgoing traffic; they do not override provider-enforced quotas.
 
 ### Stand-in Provider
 
@@ -260,16 +250,6 @@ Raw measurements are recorded in `results.csv`, with one row per logical request
 ```csv
 request_id,scenario,source,start_time,first_token_ms,total_ms,status,retries,tokens_in,tokens_out,retrieval_setting,answer_grade
 ```
-
-Allowed values:
-
-- `source`: `real` or `stand-in`
-- `status`: `ok`, `rate_limited`, `timeout`, `error`
-- `answer_grade`: `correct`, `wrong`, `refused_correctly`, `refused_wrongly`
-
-The benchmark data supports reproducible latency, reliability, token usage, and retrieval-quality analysis.
-
----
 
 ## Setup
 
@@ -360,18 +340,6 @@ pytest tests/ -v
 - Responsive document chat interface.
 - Document management (upload, delete, refresh embeddings).
 
-### Additional Application Features
-
-- DOCX document support.
-- Automatic document summaries.
-- Suggested follow-up questions.
-- Metadata-based document filtering.
-- Hybrid semantic and keyword search.
-- Dark mode.
-- JSON chat export.
-- Token usage and cost estimation dashboard.
-- Session-based user authentication.
-
 ### Advanced Reliability and Evaluation Roadmap
 
 - Configurable retrieval experiments.
@@ -396,21 +364,6 @@ Advanced capabilities should be marked as implemented only after they have been 
 
 ---
 
-## User Authentication
-
-The application includes a lightweight session-based authentication system.
-
-- Passwords are hashed using Werkzeug.
-- Demo accounts are created automatically.
-- New users can register through the web interface.
-- Protected routes require authentication.
-- Chat history is maintained separately for each logged-in user.
-- The navigation bar displays the current user's information and provides a logout option.
-
-This authentication system is intended for demonstration purposes. It can be extended with production-ready database-backed identity management, stronger authorization, and multi-tenant access controls.
-
----
-
 ## Project Engineering Principles
 
 The Relay follows a set of engineering principles for building reliable LLM-powered applications:
@@ -426,20 +379,4 @@ The Relay follows a set of engineering principles for building reliable LLM-powe
 
 ---
 
-## Future Enhancements
-
-- Multi-provider LLM routing and fallback.
-- Cost-aware model selection.
-- Adaptive retrieval configuration.
-- Semantic response caching with document-version invalidation.
-- Advanced citation and faithfulness verification.
-- Multi-tenant document isolation.
-- Distributed request scheduling.
-- Redis-backed rate limiting.
-- OpenTelemetry integration.
-- Langfuse-based observability.
-- Automated document freshness monitoring.
-- Kubernetes-based deployment and scaling.
-
----
 
